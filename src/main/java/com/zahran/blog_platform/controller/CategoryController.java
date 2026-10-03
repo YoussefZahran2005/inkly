@@ -1,6 +1,8 @@
 package com.zahran.blog_platform.controller;
 
 import com.zahran.blog_platform.domain.dtos.CategoryDto;
+import com.zahran.blog_platform.mapper.CategoryMapper;
+import com.zahran.blog_platform.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,15 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryController {
-
+    private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
     @GetMapping
     public ResponseEntity<List<CategoryDto>> listCategories() {
-        // TODO
+        List<CategoryDto> categories = categoryService.listCategories()
+                .stream()
+                .map(categoryMapper::toDto)
+                .toList();
+
+        return ResponseEntity.ok(categories);
     }
 }
