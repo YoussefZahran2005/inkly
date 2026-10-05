@@ -2,10 +2,12 @@ package com.zahran.blog_platform.mapper;
 
 import com.zahran.blog_platform.domain.PostStatus;
 import com.zahran.blog_platform.domain.dtos.CategoryDto;
+import com.zahran.blog_platform.domain.dtos.CreateCategoryRequest;
 import com.zahran.blog_platform.domain.entity.Category;
 import com.zahran.blog_platform.domain.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -14,7 +16,9 @@ import java.util.List;
 public interface CategoryMapper {
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     CategoryDto toDto(Category category);
+    Category toEntity(CreateCategoryRequest createCategoryRequest);
 
+    @Named("calculatePostCount")
     default long calculatePostCount(List<Post> posts){
         if (posts == null) {
             return 0;
