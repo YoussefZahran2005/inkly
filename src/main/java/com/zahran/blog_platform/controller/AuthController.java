@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/v1/auth")
+@RequestMapping(path = "/api/v1/auth/login")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-
+    // TODO -> 2:31:06
     @PostMapping
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
         UserDetails userDetails = authService.authenticate(

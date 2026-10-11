@@ -1,5 +1,6 @@
 package com.zahran.blog_platform.config;
 
+import com.zahran.blog_platform.domain.entity.User;
 import com.zahran.blog_platform.repository.UserRepository;
 import com.zahran.blog_platform.security.BlogUserDetailsService;
 import com.zahran.blog_platform.security.JwtAuthFilter;
@@ -25,13 +26,24 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtAuthFilter jwtAuthFilter(AuthService authService){
-        return jwtAuthFilter(authService);
+        return new JwtAuthFilter(authService);
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository){
-        // DI, @RequiredArgsCons
-        return new BlogUserDetailsService(userRepository);
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        BlogUserDetailsService blogUserDetailsService = new BlogUserDetailsService(userRepository);
+
+        String email = "testEmail@lol.com";
+        userRepository.findByEmail(email).orElseGet(() -> {
+            User newUser = User.builder()
+                    .name("John Doe")
+                    .email(email)
+                    .password(passwordEncoder().encode("password"))
+                    .build();
+            return userRepository.save(newUser);
+        });
+
+        return blogUserDetailsService;
     }
 
 
@@ -40,7 +52,7 @@ public class SecurityConfiguration {
             HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/tags/**").permitAll()
