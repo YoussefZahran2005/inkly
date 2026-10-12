@@ -20,7 +20,7 @@ public class BlogUserDetails implements UserDetails {
     // no authorization in devtiro build, // TODO
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("USER_ROLE"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

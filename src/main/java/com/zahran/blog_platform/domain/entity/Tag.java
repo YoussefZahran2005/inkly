@@ -21,6 +21,10 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToMany(mappedBy = "tags")
+    private Set<Post> posts = new HashSet<>();
+
+
     @Column(nullable = false, unique = true)
     private String name;
 

@@ -33,7 +33,7 @@ public class SecurityConfiguration {
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         BlogUserDetailsService blogUserDetailsService = new BlogUserDetailsService(userRepository);
 
-        String email = "testEmail@lol.com";
+        String email = "testemail@lol.com";
         userRepository.findByEmail(email).orElseGet(() -> {
             User newUser = User.builder()
                     .name("John Doe")
