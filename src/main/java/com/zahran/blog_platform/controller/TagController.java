@@ -29,7 +29,7 @@ public class TagController {
     }
 
 
-    // TODO -> 2:48 , test the thing in the frontend, run it and the password is in the config.
+
     @PostMapping
     public ResponseEntity<List<TagDto>> createTags(@RequestBody CreateTagsRequest createTagsRequest) {
         List<Tag> savedTags = tagService.createTags(createTagsRequest.getNames());
