@@ -216,10 +216,6 @@ This is a V1, and it is better to be upfront about what is still rough:
 | Authorization | Every authenticated user has `ROLE_USER`; post update and delete do not check ownership |
 | Drafts | `GET /posts/{id}` returns a post regardless of status, so drafts can be fetched by ID |
 | Registration | No registration endpoint; users come from the seed user |
-| Tag validation | `@Valid` is missing on `POST /tags`, so its validation annotations may not run |
-| Validation errors | No dedicated handler for validation failures in the `ApiErrorResponse` format |
-| Login response | `expiersIn` is misspelled, and the returned value (`84600`) does not match the 24-hour token expiry |
-| Deletes | Deleting a missing category or tag returns `204` instead of an error |
 | Migrations | Schema is managed by Hibernate `ddl-auto`; no Flyway or Liquibase |
 | API docs | No OpenAPI / Swagger documentation yet |
 
