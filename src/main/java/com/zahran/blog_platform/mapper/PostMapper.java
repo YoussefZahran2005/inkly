@@ -1,8 +1,10 @@
 package com.zahran.blog_platform.mapper;
 
 import com.zahran.blog_platform.domain.CreatePostRequest;
+import com.zahran.blog_platform.domain.UpdatePostRequest;
 import com.zahran.blog_platform.domain.dtos.CreatePostRequestDto;
 import com.zahran.blog_platform.domain.dtos.PostDto;
+import com.zahran.blog_platform.domain.dtos.UpdatePostRequestDto;
 import com.zahran.blog_platform.domain.entity.Post;
 import jakarta.validation.Valid;
 import org.mapstruct.Mapper;
@@ -20,5 +22,7 @@ public interface PostMapper {
 
 
     CreatePostRequest toCreatePostRequest(@Valid CreatePostRequestDto createPostRequestDto);
+
+    UpdatePostRequest toUpdatePostRequest(@Valid UpdatePostRequestDto updatePostRequestDto);
 
 }

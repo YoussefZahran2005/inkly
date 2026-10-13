@@ -1,8 +1,10 @@
 package com.zahran.blog_platform.controller;
 
 import com.zahran.blog_platform.domain.CreatePostRequest;
+import com.zahran.blog_platform.domain.UpdatePostRequest;
 import com.zahran.blog_platform.domain.dtos.CreatePostRequestDto;
 import com.zahran.blog_platform.domain.dtos.PostDto;
+import com.zahran.blog_platform.domain.dtos.UpdatePostRequestDto;
 import com.zahran.blog_platform.domain.entity.Post;
 import com.zahran.blog_platform.domain.entity.User;
 import com.zahran.blog_platform.mapper.PostMapper;
@@ -54,5 +56,31 @@ public class PostController {
         return new ResponseEntity<>(createdPostDto, HttpStatus.CREATED);
     }
 
-}
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<PostDto> updatePost(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdatePostRequestDto updatePostRequestDto) {
+        UpdatePostRequest updatePostRequest = postMapper.toUpdatePostRequest(updatePostRequestDto);
+        Post updatedPost = postService.updatePost(id, updatePostRequest);
+        PostDto updatedPostDto = postMapper.toDto(updatedPost);
+        return ResponseEntity.ok(updatedPostDto);
+    }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<PostDto> getPost(
+            @PathVariable UUID id
+    ) {
+        Post post = postService.getPost(id);
+        PostDto postDto = postMapper.toDto(post);
+        return ResponseEntity.ok(postDto);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public  ResponseEntity<Void> deletePost(
+            @PathVariable UUID id
+    ) {
+      postService.deletePost(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+}
